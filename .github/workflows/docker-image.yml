@@ -34,13 +34,13 @@ jobs:
       run: gcloud info
         
     - name: Build the Docker image
-      run: docker build -t asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822-app:v2 .
+      run: docker build -t "asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822-app:v2"
 
     - name: auth repository
-      run: gcloud auth configure-docker asia-northeast3-docker.pkg.dev/erudite-pod-391005/test
+      run: gcloud auth configure-docker "asia-northeast3-docker.pkg.dev/erudite-pod-391005/test"
 
     - name: image exists check
       run: docker images
       
     - name: Upload Docker image
-      run: docker push asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822-app:v2
+      run: docker push "asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822-app:v2"
