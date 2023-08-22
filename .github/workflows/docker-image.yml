@@ -16,8 +16,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       with: 
-        workload_identity_provider: secrets.gitaction-test
-        service_account: secrets.test-gcp@erudite-pod-391005.iam.gserviceaccount.com
+        workload_identity_provider: 'secrets.gitaction-test'
+        service_account: 'secrets.test-gcp@erudite-pod-391005.iam.gserviceaccount.com'
 
     - name: Build the Docker image
       run: docker build -t asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822-app:v1 .
