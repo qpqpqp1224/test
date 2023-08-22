@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v0
+      uses: google-github-actions/setup-gcloud@v1
 
     - name: Use gcloud CLI
       run: gcloud info
@@ -24,11 +24,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
     
-    - id: auth
-      uses: google-github-actions/auth@v0
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v1'
       with:
-        workload_identity_provider: erudite-pod-391005/locations/global/workloadIdentityPools/wif-test/providers/gitaction-test'
-        service_account: test-gcp@erudite-pod-391005.iam.gserviceaccount.com
+        workload_identity_provider: 'erudite-pod-391005/locations/global/workloadIdentityPools/wif-test/providers/gitaction-test'
+        service_account: 'test-gcp@erudite-pod-391005.iam.gserviceaccount.com'
+        audience: 'https://github.com/qpqpqp1224/test'
         
     - name: Build the Docker image
       run: docker build -t asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822-app:v1 .
