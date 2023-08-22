@@ -22,6 +22,7 @@ jobs:
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
       with:
+        token_format: 'access_token'
         workload_identity_provider: projects/118785805795/locations/global/workloadIdentityPools/wif-test/subject/gitaction-test
         service_account: 'test-gcp@erudite-pod-391005.iam.gserviceaccount.com'
         audience: 'https://github.com/qpqpqp1224/test'
@@ -32,6 +33,11 @@ jobs:
 
     - name: Use gcloud CLI
       run: gcloud info
+
+    - name: Docker configuration
+      run: |-
+        echo ${{steps.auth.outputs.access_token}} | docker login -u oauth2accesstoken --password-stdin https://asia-northeast3-docker.pkg.dev
+     
         
     - name: Build the Docker image
       run: docker build -t asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822-app:v2 .
