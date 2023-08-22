@@ -9,7 +9,6 @@ on:
 jobs:
   
   workload-identity-connection:
-   
     runs-on: ubuntu-latest
     # Add "id-token" with the intended permissions.
     permissions:
