@@ -7,13 +7,14 @@ on:
     branches: [ "main" ]
     
 jobs:
-  steps:
-  workload-identity-connection:
-    runs-on: ubuntu-latest
-    # Add "id-token" with the intended permissions.
+  build_and_push:
     permissions:
       contents: read
       id-token: write
+
+   runs-on: ubuntu-latest
+
+    steps:
 
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v0
