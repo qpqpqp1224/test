@@ -22,11 +22,11 @@ jobs:
     - name: Build the Docker image
       run: docker build -t asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822-app:v1 .
 
-    - name: Build the Docker image
+    - name: auth repository
       run: gcloud auth configure-docker asia-northeast3-docker.pkg.dev/erudite-pod-391005/test
 
-    - name: Build the Docker image
+    - name: image exists check
       run: docker images
       
-    - name: Build the Docker image
+    - name: Upload Docker image
       run: docker push asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822-app:v1
