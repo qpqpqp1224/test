@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
     
 jobs:
-  
+  steps:
   workload-identity-connection:
     runs-on: ubuntu-latest
     # Add "id-token" with the intended permissions.
@@ -21,7 +21,6 @@ jobs:
     - name: Use gcloud CLI
       run: gcloud info
       
-    steps:
     - name: Checkout repository
       uses: actions/checkout@v3
     
