@@ -7,22 +7,22 @@ on:
     branches: [ "main" ]
     
 jobs:
-  build:
+  build_and_push:
     permissions:
-      contents: read
       id-token: write
-
-   runs-on: ubuntu-latest
-
+      contents: read
+  
+    runs-on: ubuntu-latest
+    
     steps:
+    - name: Checkout source code
+      uses: 'actions/checkout@v3'
+      
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
 
     - name: Use gcloud CLI
       run: gcloud info
-      
-    - name: Checkout repository
-      uses: actions/checkout@v3
     
     - id: 'auth'
       uses: 'google-github-actions/auth@v1'
