@@ -14,10 +14,9 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: google-github-actions/auth@v1
       with: 
-        workload_identity_provider: gitaction-test
-        service_account: test-gcp@erudite-pod-391005.iam.gserviceaccount.com
+        workload_identity_provider: secrets.gitaction-test
+        service_account: secrets.test-gcp@erudite-pod-391005.iam.gserviceaccount.com
 
     - name: Build the Docker image
       uses: actions/checkout@v3
