@@ -22,7 +22,6 @@ jobs:
       with:
         workload_identity_provider: 'erudite-pod-391005/locations/global/workloadIdentityPools/wif-test/providers/gitaction-test'
         service_account: 'test-gcp@erudite-pod-391005.iam.gserviceaccount.com'
-jobs:
 
   build:
 
