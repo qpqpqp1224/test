@@ -15,4 +15,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build -t asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822:v1 .
+
+    - name: Build the Docker image
+      run: gcloud auth configure-docker asia-northeast3-docker.pkg.dev 
+      
+    - name: Build the Docker image
+      run: docker push asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822:v1
