@@ -25,6 +25,7 @@ jobs:
       run: gcloud info
     
     - id: 'auth'
+      name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
       with:
         workload_identity_provider: projects/118785805795/locations/global/workloadIdentityPools/wif-test/subject/gitaction-test
