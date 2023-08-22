@@ -23,7 +23,7 @@ jobs:
       uses: 'google-github-actions/auth@v1'
       with:
         token_format: 'access_token'
-        workload_identity_provider: projects/118785805795/locations/global/workloadIdentityPools/wif-test/gitaction-test
+        workload_identity_provider: projects/118785805795/locations/global/workloadIdentityPools/wif-test/providers/gitaction-test
         service_account: 'test-gcp@erudite-pod-391005.iam.gserviceaccount.com'
         audience: 'https://github.com/qpqpqp1224/test'
         
