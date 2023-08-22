@@ -7,7 +7,6 @@ on:
     branches: [ "main" ]
     
 jobs:
-  build:  
   
   workload-identity-connection:
    
@@ -16,7 +15,8 @@ jobs:
     permissions:
       contents: read
       id-token: write
-
+      
+  build:  
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
