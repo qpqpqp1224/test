@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: helm-helloworld-container
-          image: "alpine:3.6"
+          image: "asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822-app"
           env:
           - name: PRINT_VALUES
             value: {{.Values.printValues}}
