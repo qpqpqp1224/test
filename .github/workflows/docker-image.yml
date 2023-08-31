@@ -47,4 +47,4 @@ jobs:
       run: docker images
       
     - name: Upload Docker image
-      run: docker push "asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822-app:v2"
+      run: docker push "asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test831-app:v1"
