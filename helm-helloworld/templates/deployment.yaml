@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: helm-helloworld
+  labels:
+    app: helm-helloworld
+    chart: helm-helloworld
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helm-helloworld
+  template:
+    metadata:
+      labels:
+        app: helm-helloworld
+    spec:
+      containers:
+        - name: helm-helloworld-container
+          image: "alpine:3.6"
+          env:
+          - name: PRINT_VALUES
+            value: {{.Values.printValues}}
+          command: ["/bin/sh","-c"]
+          args: 
+          - while true; do echo $PRINT_VALUES; sleep 5; done;
