@@ -1,5 +1,11 @@
-FROM alpine:3.12.0 AS runtime
+FROM ubunt:last
 
-RUN apk add bash make
+RUN apt-get update
+RUN apt-get install -y nginx
+RUN echo "Helloooo"
 
-WORKDIR /workdir
+WORKDIR /etc/nginx
+
+CMD ["nginx", -"g", "daemon off;"]
+
+EXPOSE 80
