@@ -1,0 +1,113 @@
+# This workflow will build a docker container, publish it to Google Container Registry, and deploy it to GKE when there is a push to the "main" branch.
+#
+# To configure this workflow:
+#
+# 1. Ensure that your repository contains the necessary configuration for your Google Kubernetes Engine cluster, including deployment.yml, kustomization.yml, service.yml, etc.
+#
+# 2. Create and configure a Workload Identity Provider for GitHub (https://github.com/google-github-actions/auth#setting-up-workload-identity-federation)
+#
+# 3. Change the values for the GAR_LOCATION, GKE_ZONE, GKE_CLUSTER, IMAGE, REPOSITORY and DEPLOYMENT_NAME environment variables (below).
+#
+# For more support on how to run the workflow, please visit https://github.com/google-github-actions/setup-gcloud/tree/master/example-workflows/gke-kustomize
+
+name: Build and Deploy to GKE
+
+on:
+  push:
+    branches: [ "main" ]
+#asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test822-app
+env:
+  CHART_PATH: helm-helloworld/
+  NAMESPACE: default
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  prepare:
+    permissions:
+      id-token: write
+      contents: read
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+                    
+      - name: Helm tool installer
+        uses: Azure/setup-helm@v3 
+
+      - name: Print the Helm client version information
+        run: helm version
+        
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        token_format: 'access_token'
+        workload_identity_provider: projects/118785805795/locations/global/workloadIdentityPools/wif-test/providers/gitaction-test
+        service_account: 'test-gcp@erudite-pod-391005.iam.gserviceaccount.com'
+        audience: 'https://github.com/qpqpqp1224/test'      
+      
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1.1.1
+
+    - name: Use gcloud CLI
+      run: gcloud info
+      
+    - name: Get Kubernetes config
+      run: gcloud container clusters get-credentials test --region asia-northeast3 --project erudite-pod-391005
+      
+    - name: Examine the chart for possible issues    
+      run: helm lint ${{ env.CHART_PATH }}
+
+     - name: "[MANIFESTS] Dry-run the release"
+      run: |
+        helm upgrade ${{ env.RELEASE_NAME }} ${{ env.CHART_PATH }} \
+           --namespace ${{ env.NAMESPACE }} \
+           --install \
+           --dry-run
+
+  deploy:
+    needs: prepare
+    permissions:
+      id-token: write
+      contents: read
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+                    
+      - name: Helm tool installer
+        uses: Azure/setup-helm@v3 
+
+      - name: Print the Helm client version information
+        run: helm version
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: projects/118785805795/locations/global/workloadIdentityPools/wif-test/providers/gitaction-test
+          service_account: 'test-gcp@erudite-pod-391005.iam.gserviceaccount.com'
+          audience: 'https://github.com/qpqpqp1224/test'   
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1.1.1
+
+      - name: Install Google Cloud Auth plugin
+        run: gcloud components install gke-gcloud-auth-plugin
+
+      - name: Get Kubernetes config
+        run: gcloud container clusters get-credentials test --region asia-northeast3 --project erudite-pod-391005
+        run: helm lint ${{ env.CHART_PATH }}
+
+      - name: Upgrade the release
+        run: |
+          helm upgrade ${{ env.RELEASE_NAME }} ${{ env.CHART_PATH }} \
+            --namespace ${{ env.NAMESPACE }} \
+            --install 
+
+      - name: List the upgrade result
+        run: helm list --filter ${{ env.RELEASE_NAME }} --namespace ${{ env.NAMESPACE }}
