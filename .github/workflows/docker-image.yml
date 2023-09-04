@@ -46,3 +46,4 @@ jobs:
       
     - name: Upload Docker image
       run: docker push "asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test95-app:v1"
+      
