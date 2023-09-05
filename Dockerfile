@@ -6,10 +6,10 @@ FROM nginx
 
 COPY index.html /usr/share/nginx/html/
 
-#WORKDIR /etc/nginx
+WORKDIR /etc/nginx
  
 CMD ["nginx", "-g", "daemon off;"]
  
-EXPOSE 8080
+#EXPOSE 8080
 EXPOSE 80
 #EXPOSE 443
