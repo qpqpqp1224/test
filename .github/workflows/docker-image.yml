@@ -3,6 +3,16 @@ name: Docker Image CI
 on:
   pull_request:
     branches: [ "main" ]
+
+env:
+  LOCATION: asia-northeast3
+  PROJECT_ID: erudite-pod-391005
+  REPOSITORY: test
+  IMAGE_NAME: test95
+  TAG: v5
+  PROVIDER_ID: projects/118785805795/locations/global/workloadIdentityPools/wif-test/providers/gitaction-test
+  SERVICE_ACCOUNT: test-gcp@erudite-pod-391005.iam.gserviceaccount.com
+  AUDIENCE: https://github.com/qpqpqp1224/test
     
 jobs:
   build_and_push:
@@ -21,9 +31,9 @@ jobs:
       uses: 'google-github-actions/auth@v1'
       with:
         token_format: 'access_token'
-        workload_identity_provider: projects/118785805795/locations/global/workloadIdentityPools/wif-test/providers/gitaction-test
-        service_account: 'test-gcp@erudite-pod-391005.iam.gserviceaccount.com'
-        audience: 'https://github.com/qpqpqp1224/test'      
+        workload_identity_provider: '${{ env.PROVIDER_ID }}'
+        service_account: '${{ env.SERVICE_ACCOUNT }}'
+        audience: '${{ env.AUDIENCE }}'  
       
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1.1.1
@@ -33,17 +43,17 @@ jobs:
 
     - name: Docker configuration
       run: |
-        echo "${{ steps.auth.outputs.access_token }}" | docker login -u oauth2accesstoken --password-stdin "https://asia-northeast3-docker.pkg.dev"
+        echo "${{ steps.auth.outputs.access_token }}" | docker login -u oauth2accesstoken --password-stdin https://${{ env.LOCATION }}-docker.pkg.dev
         
     - name: Build the Docker image
-      run: docker build -t asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test95-app:v4 .
+      run: docker build -t ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}${{ env.IMAGE_NAME }}:${{ env.TAG }} .
 
     - name: auth repository
-      run: gcloud auth configure-docker "asia-northeast3-docker.pkg.dev/erudite-pod-391005/test"
+      run: gcloud auth configure-docker "${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}${{ env.IMAGE_NAME }}:${{ env.TAG }}"
 
     - name: image exists check
       run: docker images
       
     - name: Upload Docker image
-      run: docker push "asia-northeast3-docker.pkg.dev/erudite-pod-391005/test/test95-app:v4"
+      run: docker push "${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}${{ env.IMAGE_NAME }}:${{ env.TAG }}"
       
