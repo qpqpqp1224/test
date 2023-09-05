@@ -46,14 +46,14 @@ jobs:
         echo "${{ steps.auth.outputs.access_token }}" | docker login -u oauth2accesstoken --password-stdin https://${{ env.LOCATION }}-docker.pkg.dev
         
     - name: Build the Docker image
-      run: docker build -t ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}${{ env.IMAGE_NAME }}:${{ env.TAG }} .
+      run: docker build -t ${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} .
 
     - name: auth repository
-      run: gcloud auth configure-docker "${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}${{ env.IMAGE_NAME }}:${{ env.TAG }}"
+      run: gcloud auth configure-docker "${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}"
 
     - name: image exists check
       run: docker images
       
     - name: Upload Docker image
-      run: docker push "${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}${{ env.IMAGE_NAME }}:${{ env.TAG }}"
+      run: docker push "${{ env.LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}"
       
