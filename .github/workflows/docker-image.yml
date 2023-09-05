@@ -9,7 +9,7 @@ env:
   PROJECT_ID: erudite-pod-391005
   REPOSITORY: test
   IMAGE_NAME: test95
-  TAG: v1
+  TAG: v2
   PROVIDER_ID: projects/118785805795/locations/global/workloadIdentityPools/wif-test/providers/gitaction-test
   SERVICE_ACCOUNT: test-gcp@erudite-pod-391005.iam.gserviceaccount.com
   AUDIENCE: https://github.com/qpqpqp1224/test
