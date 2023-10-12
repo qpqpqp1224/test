@@ -9,7 +9,7 @@ env:
   PROJECT_ID: trans-shuttle-401410
   REPOSITORY: test
   IMAGE_NAME: test_canary
-  TAG: 1.0.0
+  TAG: 2.0.0
   PROVIDER_ID: projects/400645327499/locations/global/workloadIdentityPools/gitaction/providers/gitaction
   SERVICE_ACCOUNT: serviceaccount-test@trans-shuttle-401410.iam.gserviceaccount.com
   AUDIENCE: https://github.com/qpqpqp1224/test
